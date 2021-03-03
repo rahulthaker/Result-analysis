@@ -1,5 +1,5 @@
 import pandas as pd
-import tabula
+from tabula.io import read_pdf  #Option: import tabula and use tabula.read_pdf
 import re
 
 
@@ -8,7 +8,7 @@ def create_table(file,subjects,labs):
     Labs_no=int(labs)
     filename=file
     try:
-        df = tabula.read_pdf(filename, pages="all", lattice=True)
+        df = read_pdf(filename, pages="all", lattice=True)
     except:
         print("Invalid File path")
 
