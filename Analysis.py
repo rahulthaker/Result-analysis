@@ -7,6 +7,7 @@ import plotly.tools as tls
 import plotly.figure_factory as ff
 import numpy as np
 import plotly.express as px
+from download import report_downlaoder
 
 import os
 st.image('Somaiya Header.png',width=500)
@@ -31,12 +32,15 @@ def load_data():
 cleandf=load_data()[0]
 pracsdf=load_data()[1]
 
+#pie chart
+explode=[0.1,0]
+colours=['lightgreen','Red']
+fig=px.pie(cleandf,labels=['Pass','Fail'],names='Pass/fail',title='Passing and failing percentage')
+
+
 if Analyse_type=='Visual':
     #Pie chart
     st.markdown('<html><h1><body style="background-color:orange;">Pie chart</body></h1></html>',unsafe_allow_html=True)
-    explode=[0.1,0]
-    colours=['lightgreen','Red']
-    fig=px.pie(cleandf,labels=['Pass','Fail'],names='Pass/fail',title='Passing and failing percentage')
     #fig=cleandf['Pass/fail'].value_counts().plot(kind='pie',labels=['pass','fail'],autopct='%1.1f%%',startangle=140,
     #                                       explode=explode,shadow=True,colors=colours,figsize=(5,5))
     st.plotly_chart(fig)
@@ -131,13 +135,20 @@ if Analyse_type=='Reports':
     no_students = st.number_input('Number of students ', 6)
     column = 'CGPA'
     column=st.selectbox('select an attribute',
-                 tuple(cleandf.columns)
+                 tuple(cleandf.columns[1:])
     )
 
     bottom = False
     toppers = cleandf[column].sort_values(ascending=bottom).values
-    toppers = list(toppers[0:no_students])
-    st.dataframe(cleandf[cleandf[column].isin(toppers)].sort_values(by=[column], ascending=False))
+    toppers_report = cleandf[cleandf[column].isin(toppers)].sort_values(by=[column], ascending=False)
+    st.dataframe(toppers_report)
+
+
+    report = report_downlaoder(FC,SC,PC,toppers_report,fig)
+    st.sidebar.subheader('Click On reports to generate a report and get an option to download one')
+    st.sidebar.markdown(report,unsafe_allow_html=True)
+
+
 
 
 

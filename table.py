@@ -1,6 +1,7 @@
 import pandas as pd
 from tabula.io import read_pdf  #Option: import tabula and use tabula.read_pdf
 import re
+import streamlit as st
 
 
 def create_table(file,subjects,labs):
@@ -10,7 +11,7 @@ def create_table(file,subjects,labs):
     try:
         df = read_pdf(filename, pages="all", lattice=True)
     except:
-        print("Invalid File path")
+        st.write("Invalid File path")
 
     #input
     #Subject_no = input("enter the number of subjects" or 5)
