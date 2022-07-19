@@ -17,15 +17,15 @@ def create_table(file,subjects,labs):
     #Subject_no = input("enter the number of subjects" or 5)
 
     Subjects = []
-    Labs = []
+    Labs=['AI lab','Big Data lab','DLab','MPLab']
     start_sub = 3
     end_sub = Subject_no + 3
     start_labs = end_sub
     end_labs = start_labs + Labs_no  # Where Labs_no is number of labs
     for i in range(start_sub, end_sub):
         Subjects.append(df[1].T.iloc[i][0])
-    for j in range(start_labs, end_labs):
-        Labs.append(df[1].T.iloc[j][0])
+    #for j in range(start_labs, end_labs):
+       # Labs.append(df[1].T.iloc[j][0])
 
     no_of_subjects = len(Subjects)
     no_of_labs = len(Labs)
